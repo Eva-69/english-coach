@@ -105,7 +105,7 @@ export default function App() {
 // =============================================================================
 
 function Header({ progress, onSettings }) {
-  const pct = Math.round((progress / 30) * 100);
+  const pct = Math.round((progress / 60) * 100);
   return (
     <header className="mb-6">
       <div className="flex items-start justify-between gap-4">
@@ -117,7 +117,7 @@ function Header({ progress, onSettings }) {
           <h1 className="font-display text-4xl sm:text-5xl font-medium leading-[1.05] text-stone-900">
             你的<span className="italic text-[#3d5a45]">日常英语</span>
             <br />
-            <span className="text-[#c97554]">30 天</span>计划
+            <span className="text-[#c97554]">60 天</span>计划
           </h1>
           <p className="mt-3 text-sm text-stone-600 max-w-md">
             目标: 三个月内能流畅日常对话。每天 30 分钟，按部就班。
@@ -135,7 +135,7 @@ function Header({ progress, onSettings }) {
           </button>
           <div className="hidden sm:block text-right">
             <div className="font-display text-5xl font-semibold text-[#3d5a45]">
-              {progress}<span className="text-stone-300 text-3xl">/30</span>
+              {progress}<span className="text-stone-300 text-3xl">/60</span>
             </div>
             <div className="text-xs uppercase tracking-widest text-stone-500 mt-1">Days done</div>
             <div className="mt-2 w-32 h-1 bg-stone-200 rounded-full overflow-hidden ml-auto">
@@ -147,7 +147,7 @@ function Header({ progress, onSettings }) {
 
       <div className="sm:hidden mt-4 flex items-center gap-3">
         <div className="font-display text-2xl font-semibold text-[#3d5a45]">
-          {progress}<span className="text-stone-300">/30</span>
+          {progress}<span className="text-stone-300">/60</span>
         </div>
         <div className="flex-1 h-1.5 bg-stone-200 rounded-full overflow-hidden">
           <div className="h-full bg-[#3d5a45] transition-all duration-500" style={{ width: `${pct}%` }} />
@@ -292,7 +292,7 @@ function Nav({ view, setView }) {
 
 function PlanView({ completedDays, toggleDay, onJump }) {
   const [openDay, setOpenDay] = useState(null);
-  const weeks = [1, 2, 3, 4, 5];
+  const weeks = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 
   return (
     <div className="anim-slide-up">
@@ -320,7 +320,7 @@ function PlanView({ completedDays, toggleDay, onJump }) {
             <div className="flex items-baseline justify-between mb-3 px-1">
               <h3 className="font-display text-2xl font-medium text-stone-900">
                 Week <span className="italic text-[#3d5a45]">{w}</span>
-                {w === 5 && <span className="ml-2 text-base text-stone-500">(收尾)</span>}
+                {w === 10 && <span className="ml-2 text-base text-stone-500">(收尾)</span>}
               </h3>
               <span className="text-xs text-stone-500 tabular-nums">{weekDone}/{days.length}</span>
             </div>
