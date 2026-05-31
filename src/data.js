@@ -147,3 +147,182 @@ export const PLAN = [
   { day: 29, week: 5, theme: "Real Conversation Practice", tasks: { speak: "进 '对话练习'，连续聊 10 轮 (办公室主题)", listen: "看一段真实闲聊 vlog 2 分钟", vocab: "无新单字，专注流畅度", grammar: "把所有句型混合用", review: "找出最不熟的 10 句重练" } },
   { day: 30, week: 5, theme: "🎉 Month 1 Final Review", tasks: { speak: "进 '对话练习'，'见朋友' 主题聊 10 轮", listen: "再看 Day 29 影片，跟读", vocab: "随机抽 30 个单字自测", grammar: "随机抽 5 个文法点造句", review: "完成第一个月大测验 30 题！" }, isCheckpoint: true },
 ];
+
+export const EMAIL_TEMPLATES = {
+  professional: [
+    {
+      title: "Reply to a Request",
+      zhTitle: "回复请求",
+      whenToUse: "当有人请你帮忙或提出要求，你同意协助时使用",
+      subject: "Re: [topic] — Happy to Help",
+      body: `Hi [Name],\n\nThanks for reaching out! I'd be happy to help with [topic].\n\nI'll get started on this right away and send you an update by [date/time].\n\nLet me know if you need anything else in the meantime.\n\nBest,\n[Your Name]`,
+      keyPhrases: [
+        { en: "I'd be happy to help with [topic].", zh: "我很乐意帮忙处理[topic]。" },
+        { en: "I'll get started on this right away.", zh: "我会马上开始处理这件事。" },
+        { en: "Let me know if you need anything else.", zh: "如果还有其他需要，请告诉我。" },
+      ],
+    },
+    {
+      title: "Following Up",
+      zhTitle: "跟进追踪",
+      whenToUse: "当你等待对方回复已经一段时间，需要礼貌地催促时使用",
+      subject: "Following Up: [topic]",
+      body: `Hi [Name],\n\nI hope you're doing well! I wanted to follow up on my previous message about [topic].\n\nJust checking in to see if you had a chance to look into it. No rush — I just want to make sure it didn't get lost in your inbox.\n\nLooking forward to hearing from you.\n\nBest,\n[Your Name]`,
+      keyPhrases: [
+        { en: "I wanted to follow up on my previous message.", zh: "我想跟进一下我之前发的信息。" },
+        { en: "Just checking in to see if you had a chance to look into it.", zh: "只是来问问你有没有机会看一下。" },
+        { en: "I just want to make sure it didn't get lost in your inbox.", zh: "只是想确认一下没有被埋在收件箱里。" },
+      ],
+    },
+    {
+      title: "Apology for Late Response",
+      zhTitle: "迟回道歉",
+      whenToUse: "当你回复别人的邮件晚了，需要道歉并说明原因时使用",
+      subject: "Sorry for the Late Reply — [topic]",
+      body: `Hi [Name],\n\nMy apologies for the delayed response! Things have been a bit hectic on my end, but I didn't want to leave you waiting any longer.\n\nTo answer your question about [topic]: [your answer here].\n\nThanks for your patience, and please don't hesitate to reach out if you have more questions.\n\nBest,\n[Your Name]`,
+      keyPhrases: [
+        { en: "My apologies for the delayed response!", zh: "非常抱歉回复晚了！" },
+        { en: "Things have been a bit hectic on my end.", zh: "我这边最近有点忙乱。" },
+        { en: "Thanks for your patience.", zh: "感谢你的耐心等待。" },
+      ],
+    },
+    {
+      title: "Polite Decline",
+      zhTitle: "礼貌婉拒",
+      whenToUse: "当你无法答应别人的请求，需要礼貌地拒绝时使用",
+      subject: "Re: [topic] — Unfortunately Unable to Help This Time",
+      body: `Hi [Name],\n\nThank you so much for thinking of me for [topic]. I really appreciate it!\n\nUnfortunately, I'm not able to take this on right now due to [reason/prior commitments]. I hope you understand.\n\nI'd love to help in the future when my schedule clears up. Best of luck with [topic]!\n\nBest,\n[Your Name]`,
+      keyPhrases: [
+        { en: "Unfortunately, I'm not able to take this on right now.", zh: "很遗憾，我现在没办法接手这件事。" },
+        { en: "I hope you understand.", zh: "希望你能理解。" },
+        { en: "I'd love to help in the future when my schedule clears up.", zh: "等我时间空出来了，很乐意之后帮忙。" },
+      ],
+    },
+    {
+      title: "Asking for Clarification",
+      zhTitle: "要求澄清",
+      whenToUse: "当你对对方说的内容不太清楚，需要进一步解释时使用",
+      subject: "Quick Question About [topic]",
+      body: `Hi [Name],\n\nThanks for your message about [topic]. I just want to make sure I understand correctly before moving forward.\n\nCould you clarify [specific point]? Specifically, I'd like to know [your question].\n\nOnce I have a better understanding, I'll be able to [next step] right away.\n\nThanks so much!\n\nBest,\n[Your Name]`,
+      keyPhrases: [
+        { en: "I just want to make sure I understand correctly.", zh: "我只是想确认我理解正确。" },
+        { en: "Could you clarify [specific point]?", zh: "你能澄清一下[specific point]吗？" },
+        { en: "Once I have a better understanding, I'll be able to proceed.", zh: "等我更清楚了，我就能马上继续处理。" },
+      ],
+    },
+  ],
+  social: [
+    {
+      title: "Thank-You Note",
+      zhTitle: "感谢信",
+      whenToUse: "收到礼物、获得帮助或受到款待后，表达感谢时使用",
+      subject: "Thank You for [occasion/gift/help]",
+      body: `Hi [Name],\n\nI just wanted to take a moment to say thank you so much for [occasion/what they did]. It really meant a lot to me!\n\n[Add one specific detail about why it was special or how it helped.]\n\nI truly appreciate your kindness and thoughtfulness. Let's catch up soon!\n\nWarmly,\n[Your Name]`,
+      keyPhrases: [
+        { en: "It really meant a lot to me.", zh: "这对我真的很有意义。" },
+        { en: "I truly appreciate your kindness.", zh: "我真的很感激你的善意。" },
+        { en: "Let's catch up soon!", zh: "我们找时间聚聚吧！" },
+      ],
+    },
+    {
+      title: "Congratulations",
+      zhTitle: "恭喜贺信",
+      whenToUse: "当朋友或同事有好消息（升职、毕业、结婚等）时使用",
+      subject: "Congratulations on [achievement]!",
+      body: `Hi [Name],\n\nI just heard the amazing news — congratulations on [achievement]! You absolutely deserve it!\n\nAll the hard work you've put in has clearly paid off. I'm so proud of you and excited for what's ahead.\n\nLet's celebrate soon! How about grabbing coffee or dinner sometime this week?\n\nWith love,\n[Your Name]`,
+      keyPhrases: [
+        { en: "You absolutely deserve it!", zh: "你完全值得拥有这一切！" },
+        { en: "All the hard work you've put in has clearly paid off.", zh: "你付出的所有努力显然都有了回报。" },
+        { en: "Let's celebrate soon!", zh: "我们找个时间好好庆祝吧！" },
+      ],
+    },
+    {
+      title: "Checking In with a Friend",
+      zhTitle: "问候老朋友",
+      whenToUse: "当你一段时间没联系朋友，想了解近况时使用",
+      subject: "Hey, just checking in!",
+      body: `Hey [Name],\n\nIt's been a while! I was just thinking about you and wanted to say hi.\n\nHow are you doing? How's everything going with [work/life/something you know about them]?\n\nIt would be so great to catch up. If you have time, maybe we could grab coffee or have a quick chat sometime soon?\n\nMiss you!\n[Your Name]`,
+      keyPhrases: [
+        { en: "It's been a while!", zh: "好久不见！" },
+        { en: "I was just thinking about you.", zh: "我刚好在想到你。" },
+        { en: "It would be so great to catch up.", zh: "能叙叙旧真的很棒。" },
+      ],
+    },
+    {
+      title: "RSVP to an Invitation",
+      zhTitle: "回复邀请",
+      whenToUse: "当你收到活动邀请，需要确认是否出席时使用",
+      subject: "RSVP: [event name] — [Attending / Unable to Attend]",
+      body: `Hi [Name],\n\nThank you so much for the invitation to [event name]!\n\nI'm happy to confirm I'll be attending — I'm really looking forward to it! See you on [date].\n\n[Or if declining: I'm so sorry, but I won't be able to make it this time. I hope it goes wonderfully!]\n\nThanks again for thinking of me.\n\nBest,\n[Your Name]`,
+      keyPhrases: [
+        { en: "Thank you so much for the invitation.", zh: "非常感谢你的邀请。" },
+        { en: "I'm happy to confirm I'll be attending.", zh: "我很高兴确认我会出席。" },
+        { en: "I'm so sorry, but I won't be able to make it this time.", zh: "非常抱歉，这次我没办法参加。" },
+      ],
+    },
+  ],
+  internal: [
+    {
+      title: "Meeting Request",
+      zhTitle: "会议邀请",
+      whenToUse: "需要约同事或上司开会讨论某个话题时使用",
+      subject: "Meeting Request: [topic] — [Your Name]",
+      body: `Hi [Name],\n\nI'd like to schedule a meeting to discuss [topic]. I think a [30-minute / 1-hour] call would be enough to cover everything.\n\nWould any of the following times work for you?\n- [Day, Date] at [Time]\n- [Day, Date] at [Time]\n- [Day, Date] at [Time]\n\nPlease let me know what works best, or feel free to suggest another time if none of these suit you.\n\nLooking forward to connecting!\n\nBest,\n[Your Name]`,
+      keyPhrases: [
+        { en: "I'd like to schedule a meeting to discuss [topic].", zh: "我想约个会议讨论[topic]。" },
+        { en: "Would any of the following times work for you?", zh: "以下时间有哪个方便吗？" },
+        { en: "Feel free to suggest another time if none of these suit you.", zh: "如果这些时间都不方便，请随时提出其他时间。" },
+      ],
+    },
+    {
+      title: "Status Update to Manager",
+      zhTitle: "进度汇报",
+      whenToUse: "定期向上司汇报工作进度，或在项目关键节点更新状态时使用",
+      subject: "Status Update — [Project Name] — [Date]",
+      body: `Hi [Manager's Name],\n\nHere's a quick update on [project name]:\n\n✅ Completed this week:\n- [Task 1]\n- [Task 2]\n\n🔄 In progress:\n- [Task 3] — on track, expected by [date]\n\n⚠️ Blockers / issues:\n- [Any issue, or "None at the moment"]\n\nNext steps:\n- [What you're doing next week]\n\nLet me know if you have any questions or feedback.\n\nBest,\n[Your Name]`,
+      keyPhrases: [
+        { en: "Here's a quick update on [project].", zh: "这是关于[project]的简短进度报告。" },
+        { en: "On track, expected by [date].", zh: "进度正常，预计[date]完成。" },
+        { en: "Let me know if you have any questions or feedback.", zh: "如果有任何问题或意见，请告诉我。" },
+      ],
+    },
+    {
+      title: "Out-of-Office Handover",
+      zhTitle: "离职/休假交接",
+      whenToUse: "请假、出差或休假前，向同事交接工作时使用",
+      subject: "Out of Office: [Your Name] — [Dates]",
+      body: `Hi [Name],\n\nI'll be out of the office from [start date] to [end date] and will have limited access to email.\n\nDuring this time, please contact [colleague's name] at [email] for urgent matters.\n\nBefore I leave, I'll make sure to:\n- [Task 1 — e.g., complete the pending report]\n- [Task 2 — e.g., brief the team on open items]\n\nI'll respond to all messages when I'm back on [return date].\n\nThanks for your understanding!\n\nBest,\n[Your Name]`,
+      keyPhrases: [
+        { en: "I'll be out of the office from [date] to [date].", zh: "我将从[date]到[date]不在办公室。" },
+        { en: "Please contact [name] for urgent matters.", zh: "紧急事宜请联系[name]。" },
+        { en: "I'll respond to all messages when I'm back.", zh: "我回来后会回复所有信息。" },
+      ],
+    },
+    {
+      title: "Requesting Feedback",
+      zhTitle: "请求反馈",
+      whenToUse: "完成一项工作或项目后，向上司或同事请求意见和反馈时使用",
+      subject: "Request for Feedback — [Project/Document Name]",
+      body: `Hi [Name],\n\nI've finished [project/document name] and would really value your feedback before I [submit/present/finalize] it.\n\nI've attached/linked it here: [link or "see attachment"]\n\nSpecifically, I'd appreciate your thoughts on:\n- [Aspect 1 — e.g., overall structure]\n- [Aspect 2 — e.g., tone and clarity]\n\nNo worries if you're busy — even a few quick comments would be really helpful. I need it by [deadline] if possible.\n\nThank you so much!\n\nBest,\n[Your Name]`,
+      keyPhrases: [
+        { en: "I would really value your feedback.", zh: "我非常重视你的反馈意见。" },
+        { en: "Even a few quick comments would be really helpful.", zh: "就算只是简短的几句意见也会很有帮助。" },
+        { en: "I need it by [deadline] if possible.", zh: "如果可以的话，我需要在[deadline]之前收到。" },
+      ],
+    },
+  ],
+};
+
+export const allEmailPhrases = () =>
+  Object.values(EMAIL_TEMPLATES).flatMap((cat) =>
+    cat.flatMap((t) =>
+      t.keyPhrases.map((p) => ({
+        zh: p.zh,
+        natural: p.en,
+        literal: p.en,
+        tip: `来自模板: "${t.title}"`,
+        category: "email",
+        catLabel: "邮件短语",
+      }))
+    )
+  );
