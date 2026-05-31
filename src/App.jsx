@@ -450,7 +450,13 @@ function TaskRow({ icon, label, text }) {
 
 function SentencesView() {
   const [activeCat, setActiveCat] = useState("home");
+  const [heard, setHeard] = useState(() => getSentencesHeard());
   const cat = SENTENCES[activeCat];
+
+  const handleSpeak = (sentence) => {
+    recordSentenceHeard(activeCat, sentence.natural);
+    setHeard(getSentencesHeard());
+  };
 
   return (
     <div className="anim-slide-up">
@@ -459,7 +465,7 @@ function SentencesView() {
         <p className="text-sm text-stone-600">
           按情境分类的常用句。每句给你 <span className="font-semibold">自然说法</span>、
           <span className="font-semibold">直翻意思</span>、
-          <span className="font-semibold">发音提示</span>。
+          <span className="font-semibold">发音提示</span>。播放所有语音即完成该类别。
         </p>
       </div>
 
@@ -467,6 +473,8 @@ function SentencesView() {
         {Object.entries(SENTENCES).map(([key, c]) => {
           const CatIcon = c.icon;
           const active = key === activeCat;
+          const heardInCat = heard[key] || [];
+          const complete = heardInCat.length >= c.items.length;
           return (
             <button
               key={key}
@@ -477,26 +485,32 @@ function SentencesView() {
             >
               <CatIcon className="w-4 h-4" />
               <span>{c.label}</span>
-              <span className={`text-xs ${active ? "text-stone-300" : "text-stone-400"}`}>{c.items.length}</span>
+              {complete
+                ? <CheckCircle2 className={`w-3.5 h-3.5 ${active ? "text-stone-300" : "text-[#3d5a45]"}`} />
+                : <span className={`text-xs ${active ? "text-stone-300" : "text-stone-400"}`}>{c.items.length}</span>
+              }
             </button>
           );
         })}
       </div>
 
       <div className="space-y-3">
-        {cat.items.map((s, i) => <SentenceCard key={i} sentence={s} index={i} />)}
+        {cat.items.map((s, i) => (
+          <SentenceCard key={i} sentence={s} index={i} onSpeak={handleSpeak} />
+        ))}
       </div>
     </div>
   );
 }
 
-function SentenceCard({ sentence, index }) {
+function SentenceCard({ sentence, index, onSpeak }) {
   const speak = () => {
     if (!("speechSynthesis" in window)) return;
     const u = new SpeechSynthesisUtterance(sentence.natural);
     u.lang = "en-US";
     u.rate = 0.9;
     window.speechSynthesis.speak(u);
+    onSpeak?.(sentence);
   };
 
   return (
