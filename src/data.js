@@ -1,4 +1,4 @@
-import { Home, Briefcase, Plane, ShoppingBag } from "lucide-react";
+import { Home, Briefcase, Plane, ShoppingBag, MessageCircle, Phone, Users2 } from "lucide-react";
 
 export const normalize = (s) =>
   s.toLowerCase().replace(/['']/g, "'").replace(/[.,!?;:"]/g, "").replace(/\s+/g, " ").trim();
@@ -54,6 +54,58 @@ export const SENTENCES = {
       { zh: "可以便宜一点吗？", natural: "Could you give me a discount?", literal: "Could you give me a discount?", tip: "discount 念 DIS-kownt。Could you 比 Can you 礼貌。" },
       { zh: "我可以刷卡吗？", natural: "Can I pay by card?", literal: "Can I pay by card?", tip: "by card / by credit card 都行。也可问 Do you take card?" },
       { zh: "我要这个", natural: "I'll take this one.", literal: "I will take this one.", tip: "决定要买时说。take 在这里=买。" },
+    ],
+  },
+  dailyComm: {
+    label: "日常沟通", labelEn: "Daily Communication", icon: MessageCircle,
+    items: [
+      { zh: "你方便说话吗？", natural: "Is now a good time to talk?", literal: "Is now a good time to talk?", tip: "good time 念 good-TIME。比 'Are you free?' 更体贴，先问方不方便。" },
+      { zh: "我想跟你商量一件事", natural: "Can I run something by you?", literal: "Can I run (= share) something by (= past) you?", tip: "run something by you 是固定说法，非常口语化。" },
+      { zh: "你的意思是…？", natural: "So you mean…?", literal: "So you mean…?", tip: "So 放句首表示'那你是说'。mean 念 meen。上扬语调。" },
+      { zh: "我明白你的意思", natural: "I get what you mean.", literal: "I get (= understand) what you mean.", tip: "get = understand，超口语。也可说 I see what you mean。" },
+      { zh: "你能再说一遍吗？", natural: "Sorry, could you say that again?", literal: "Sorry, could you say that again?", tip: "Sorry 放前面更有礼貌。again 念 uh-GEN。" },
+      { zh: "我没听清楚", natural: "Sorry, I didn't catch that.", literal: "Sorry, I didn't catch (= hear/understand) that.", tip: "catch = 听清楚，固定用法。比 'I didn't hear' 更自然。" },
+      { zh: "等我想一下", natural: "Let me think about that.", literal: "Let me think about that.", tip: "Let me 念 LET-me，连读。比 'Wait' 更礼貌，显得在认真思考。" },
+      { zh: "我们找个时间聊聊", natural: "Let's catch up sometime.", literal: "Let's catch up (= talk/reconnect) sometime.", tip: "catch up 念 catch-UP。sometime 比 'someday' 更有约的感觉。" },
+    ],
+  },
+  workComm: {
+    label: "职场沟通", labelEn: "Work Communication", icon: Briefcase,
+    items: [
+      { zh: "我把这件事转给你", natural: "I'll loop you in.", literal: "I will loop (= include) you in.", tip: "loop you in 是超常用的职场说法。= 让你知情/加进来。" },
+      { zh: "我们对齐一下", natural: "Let's get on the same page.", literal: "Let's get on the same page (= have the same understanding).", tip: "get on the same page 固定说法。page 念 payj。" },
+      { zh: "这件事能麻烦你跟进吗？", natural: "Could you follow up on this?", literal: "Could you follow up (= check/pursue) on this?", tip: "follow up 念 FOL-oh-up。Could you 比 Can you 礼貌。" },
+      { zh: "我需要你的反馈", natural: "I'd love your feedback on this.", literal: "I would love your feedback (= comments/opinions) on this.", tip: "I'd love 比 I need 更软。feedback 念 FEED-bak。" },
+      { zh: "我先发给你看", natural: "Let me send it over for your review.", literal: "Let me send it over for your review.", tip: "send it over 比 'send to you' 更口语。review 念 rih-VYOO。" },
+      { zh: "我们今天能完成吗？", natural: "Can we wrap this up today?", literal: "Can we wrap (= finish) this up today?", tip: "wrap up 念 rap-UP。比 'finish' 更日常职场用法。" },
+      { zh: "这个任务我来负责", natural: "I'll own this one.", literal: "I will own (= be responsible for) this one.", tip: "own = 负责，职场口语。比 'I'll do it' 更有担当感。" },
+      { zh: "有什么需要我帮忙的吗？", natural: "Is there anything I can help with?", literal: "Is there anything I can help with?", tip: "help with 念 help-WITH，介系词放最后是英文正常语序。" },
+    ],
+  },
+  phoneVideo: {
+    label: "电话/视频", labelEn: "Phone & Video Calls", icon: Phone,
+    items: [
+      { zh: "你听得到我吗？", natural: "Can you hear me okay?", literal: "Can you hear me okay (= fine)?", tip: "okay 放结尾是确认语气。也可说 Can you hear me alright?" },
+      { zh: "我这边有点断断续续", natural: "You're breaking up a bit.", literal: "You are breaking up (= audio cutting out) a bit.", tip: "breaking up 是视频/电话断线的专用说法。a bit = 有一点。" },
+      { zh: "我先把自己静音", natural: "I'll mute myself for now.", literal: "I will mute (= silence) myself for now.", tip: "mute 念 myoot。for now = 暂时。视频会议必备句。" },
+      { zh: "你能开视频吗？", natural: "Can you turn your camera on?", literal: "Can you turn your camera on?", tip: "turn on 是片语动词，camera 和 on 分开。也说 Can you switch your video on?" },
+      { zh: "我等下打给你", natural: "I'll call you back in a bit.", literal: "I will call you back in a bit (= soon).", tip: "call back = 回电话。in a bit 比 'soon' 更口语。" },
+      { zh: "我现在不方便接电话", natural: "I can't talk right now.", literal: "I cannot talk right now.", tip: "can't 念 kant（美式）。right now 强调'现在这一刻'。简短直接不失礼。" },
+      { zh: "让我共享一下屏幕", natural: "Let me share my screen.", literal: "Let me share my screen.", tip: "share my screen 是视频会议标准说法。screen 念 skreen。" },
+      { zh: "信号不太好", natural: "The connection isn't great.", literal: "The connection is not great.", tip: "connection 念 kuh-NEK-shun。isn't great 比 'is bad' 更委婉。" },
+    ],
+  },
+  social: {
+    label: "社交场合", labelEn: "Social Situations", icon: Users2,
+    items: [
+      { zh: "很高兴认识你", natural: "Great to meet you!", literal: "It is great to meet you!", tip: "口语常省略 'It is'。Great 念 grayt，比 Nice 更热情。" },
+      { zh: "请随便用", natural: "Help yourself!", literal: "Help yourself! (= take what you want)", tip: "固定说法，招待客人时用。yourself 念 yer-SELF。" },
+      { zh: "你喝点什么？", natural: "Can I get you something to drink?", literal: "Can I get (= bring/offer) you something to drink?", tip: "can I get you 是招待标准句，连读。" },
+      { zh: "这里的食物很好吃", natural: "The food here is amazing.", literal: "The food here is amazing.", tip: "amazing 念 uh-MAY-zing。比 'delicious' 更口语。" },
+      { zh: "你是怎么认识他们的？", natural: "How do you know them?", literal: "How do you know them?", tip: "know 念 no。比 'How did you meet them?' 更简洁常用。" },
+      { zh: "你最近怎么样？", natural: "How have you been?", literal: "How have you been (= how are you lately)?", tip: "比 'How are you' 更有温度，暗示一段时间没见。been 念 bin。" },
+      { zh: "我先失陪一下", natural: "Excuse me for a moment.", literal: "Excuse me for a moment (= a short time).", tip: "Excuse me 念 ek-SKYOOZ-me。for a moment 比 'I need to go' 更有礼貌。" },
+      { zh: "今天玩得很开心", natural: "I had a great time today.", literal: "I had a great time today.", tip: "had a great time 是道别时的固定句。也可说 This was so much fun。" },
     ],
   },
 };
