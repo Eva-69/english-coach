@@ -123,6 +123,7 @@ export default function App() {
             {view === "sentences" && <SentencesView />}
             {view === "quiz" && <QuizView />}
             {view === "chat" && <ChatView openSettings={() => setShowSettings(true)} />}
+            {view === "email" && <EmailView />}
           </main>
 
           <footer className="mt-16 pt-8 border-t border-stone-900/10 text-center text-xs text-stone-500">
@@ -294,10 +295,11 @@ function SettingsModal({ onClose }) {
 
 function Nav({ view, setView }) {
   const tabs = [
-    { id: "plan", label: "学习计划", icon: Calendar },
+    { id: "plan",      label: "学习计划", icon: Calendar },
     { id: "sentences", label: "句子练习", icon: BookOpen },
-    { id: "quiz", label: "随机测验", icon: Shuffle },
-    { id: "chat", label: "对话练习", icon: MessageCircle },
+    { id: "quiz",      label: "随机测验", icon: Shuffle },
+    { id: "email",     label: "邮件模板", icon: Mail },
+    { id: "chat",      label: "对话练习", icon: MessageCircle },
   ];
 
   return (
