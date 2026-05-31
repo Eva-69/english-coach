@@ -1,4 +1,4 @@
-import { Home, Briefcase, Plane, ShoppingBag, MessageCircle, Phone, Users2 } from "lucide-react";
+import { Home, Briefcase, Plane, ShoppingBag } from "lucide-react";
 
 export const normalize = (s) =>
   s.toLowerCase().replace(/['']/g, "'").replace(/[.,!?;:"]/g, "").replace(/\s+/g, " ").trim();
