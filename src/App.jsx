@@ -558,16 +558,48 @@ function levenshteinClose(a, b) {
 }
 
 function QuizView() {
-  const [pool, setPool] = useState(() => shuffle(allSentences()));
+  const [quizMode, setQuizMode] = useState("sentences");
+  const buildPool = (mode) =>
+    shuffle(mode === "sentences" ? allSentences() : allEmailPhrases());
+
+  const [pool, setPool] = useState(() => buildPool("sentences"));
   const [idx, setIdx] = useState(0);
   const [answer, setAnswer] = useState("");
   const [result, setResult] = useState(null);
   const [showAnswer, setShowAnswer] = useState(false);
   const [stats, setStats] = useState({ correct: 0, attempts: 0 });
   const [wrongQueue, setWrongQueue] = useState([]);
+  const [sessionSaved, setSessionSaved] = useState(false);
+  const [showSaved, setShowSaved] = useState(false);
   const inputRef = useRef(null);
 
   const current = pool[idx];
+
+  useEffect(() => {
+    if (!sessionSaved && stats.attempts >= 10) {
+      const accuracy = stats.correct / stats.attempts;
+      if (accuracy >= 0.8) {
+        saveQuizSession(quizMode, stats.correct, stats.attempts);
+        setSessionSaved(true);
+        setShowSaved(true);
+        setTimeout(() => setShowSaved(false), 2000);
+      }
+    }
+  }, [stats, sessionSaved, quizMode]);
+
+  const switchMode = (mode) => {
+    setQuizMode(mode);
+    setPool(buildPool(mode));
+    setIdx(0);
+    setAnswer("");
+    setResult(null);
+    setShowAnswer(false);
+    setStats({ correct: 0, attempts: 0 });
+    setWrongQueue([]);
+    setSessionSaved(false);
+    setShowSaved(false);
+    setTimeout(() => inputRef.current?.focus(), 50);
+  };
 
   const checkAnswer = () => {
     if (!answer.trim()) return;
@@ -604,7 +636,7 @@ function QuizView() {
     }
 
     if (idx + 1 >= pool.length) {
-      setPool(shuffle(allSentences()));
+      setPool(buildPool(quizMode));
       setIdx(0);
     } else {
       setIdx(idx + 1);
@@ -619,13 +651,15 @@ function QuizView() {
   };
 
   const reset = () => {
-    setPool(shuffle(allSentences()));
+    setPool(buildPool(quizMode));
     setIdx(0);
     setAnswer("");
     setResult(null);
     setShowAnswer(false);
     setStats({ correct: 0, attempts: 0 });
     setWrongQueue([]);
+    setSessionSaved(false);
+    setShowSaved(false);
   };
 
   const accuracy = stats.attempts > 0 ? Math.round((stats.correct / stats.attempts) * 100) : 0;
@@ -652,12 +686,35 @@ function QuizView() {
             </button>
           </div>
         </div>
+
+        <div className="mt-4 flex gap-1 p-1 bg-stone-900/[0.04] rounded-xl border border-stone-900/5 max-w-xs">
+          {[
+            { id: "sentences", label: "句子模式" },
+            { id: "email",     label: "邮件短语" },
+          ].map((m) => (
+            <button
+              key={m.id}
+              onClick={() => switchMode(m.id)}
+              className={`flex-1 py-1.5 px-3 rounded-lg text-xs font-medium transition-all ${
+                quizMode === m.id ? "bg-stone-900 text-stone-50 shadow-sm" : "text-stone-600 hover:text-stone-900"
+              }`}
+            >
+              {m.label}
+            </button>
+          ))}
+        </div>
       </div>
+
+      {showSaved && (
+        <div className="mb-4 text-center text-sm text-[#3d5a45] bg-[#3d5a45]/5 border border-[#3d5a45]/20 rounded-xl py-2.5 anim-slide-up">
+          ✓ 本次测验已记录
+        </div>
+      )}
 
       <div className="bg-[#fffcf5] border border-stone-900/10 rounded-2xl ink-shadow-deep p-6 sm:p-10">
         <div className="text-center mb-2">
           <span className="inline-block px-2.5 py-1 bg-stone-900/5 rounded-full text-xs text-stone-600 font-medium">
-            {SENTENCES[current.category].label}
+            {quizMode === "email" ? "邮件短语" : (SENTENCES[current.category]?.label || current.catLabel)}
           </span>
         </div>
         <div className="text-center mb-8">
