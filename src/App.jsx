@@ -3,7 +3,6 @@ import {
   Send, Sparkles, CheckCircle2, Circle, RotateCcw, ChevronRight,
   Volume2, Trophy, Calendar, MessageCircle, BookOpen, Shuffle,
   Coffee, Users, Loader2, X, Settings, Key, AlertTriangle, Mail,
-  Phone, Users2,
 } from "lucide-react";
 import { SENTENCES, EMAIL_TEMPLATES, PLAN, normalize, allSentences, allEmailPhrases } from "./data.js";
 
@@ -502,6 +501,7 @@ function SentencesView() {
   const [activeCat, setActiveCat] = useState("home");
   const [heard, setHeard] = useState(() => getSentencesHeard());
   const cat = SENTENCES[activeCat];
+  if (!cat) return null;
 
   const handleSpeak = (sentence) => {
     recordSentenceHeard(activeCat, sentence.natural);
@@ -638,6 +638,7 @@ function QuizView() {
   const inputRef = useRef(null);
 
   const current = pool[idx];
+  if (!current) return null;
 
   useEffect(() => {
     if (!sessionSaved && stats.attempts >= 10) {
@@ -1194,6 +1195,7 @@ function EmailView() {
   ];
   const [activeCat, setActiveCat] = useState("professional");
   const templates = EMAIL_TEMPLATES[activeCat];
+  if (!templates) return null;
 
   return (
     <div className="anim-slide-up">
@@ -1231,10 +1233,12 @@ function EmailView() {
 function CopyButton({ text }) {
   const [copied, setCopied] = useState(false);
   const copy = () => {
-    navigator.clipboard.writeText(text).then(() => {
-      setCopied(true);
-      setTimeout(() => setCopied(false), 1500);
-    });
+    navigator.clipboard.writeText(text)
+      .then(() => {
+        setCopied(true);
+        setTimeout(() => setCopied(false), 1500);
+      })
+      .catch(() => {});
   };
   return (
     <button
