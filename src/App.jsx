@@ -16,6 +16,8 @@ const STORAGE_KEYS = {
   apiKey: "english-coach:api-key",
   model: "english-coach:model",
   completedDays: "english-coach:completed-days",
+  quizSessions: "english-coach:quiz-sessions",
+  sentencesHeard: "english-coach:sentences-heard",
 };
 
 const loadKey = (k, fallback) => {
@@ -28,6 +30,40 @@ const loadKey = (k, fallback) => {
 };
 const saveKey = (k, v) => {
   try { localStorage.setItem(k, v); } catch { /* ignore */ }
+};
+
+const getQuizSessions = () => {
+  try { return JSON.parse(localStorage.getItem(STORAGE_KEYS.quizSessions) || "[]"); } catch { return []; }
+};
+
+const saveQuizSession = (mode, correct, attempts) => {
+  try {
+    const sessions = getQuizSessions();
+    sessions.push({ date: new Date().toISOString(), mode, correct, attempts });
+    localStorage.setItem(STORAGE_KEYS.quizSessions, JSON.stringify(sessions));
+  } catch { /* ignore */ }
+};
+
+const getSentencesHeard = () => {
+  try { return JSON.parse(localStorage.getItem(STORAGE_KEYS.sentencesHeard) || "{}"); } catch { return {}; }
+};
+
+const recordSentenceHeard = (category, natural) => {
+  try {
+    const heard = getSentencesHeard();
+    if (!heard[category]) heard[category] = [];
+    if (!heard[category].includes(natural)) {
+      heard[category].push(natural);
+      localStorage.setItem(STORAGE_KEYS.sentencesHeard, JSON.stringify(heard));
+    }
+  } catch { /* ignore */ }
+};
+
+const isCategoryComplete = (categoryKey) => {
+  const heard = getSentencesHeard();
+  const heardInCat = heard[categoryKey] || [];
+  const total = SENTENCES[categoryKey]?.items.length || 0;
+  return total > 0 && heardInCat.length >= total;
 };
 
 // =============================================================================
