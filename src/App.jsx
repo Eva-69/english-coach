@@ -332,8 +332,43 @@ function PlanView({ completedDays, toggleDay, onJump }) {
   const [openDay, setOpenDay] = useState(null);
   const weeks = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 
+  const nextIncompleteDay = PLAN.find((d) => !completedDays.has(d.day));
+  const lastCompletedDay = [...PLAN].reverse().find((d) => completedDays.has(d.day));
+
+  const scrollToDay = (dayNum) => {
+    setOpenDay(dayNum);
+    setTimeout(() => {
+      document.getElementById(`day-${dayNum}`)?.scrollIntoView({ behavior: "smooth", block: "center" });
+    }, 50);
+  };
+
   return (
     <div className="anim-slide-up">
+      {nextIncompleteDay ? (
+        <button
+          onClick={() => scrollToDay(nextIncompleteDay.day)}
+          className="w-full text-left bg-[#3d5a45]/5 border border-[#3d5a45]/20 rounded-2xl p-4 mb-5 hover:bg-[#3d5a45]/10 transition-colors"
+        >
+          <div className="flex items-start justify-between gap-3">
+            <div>
+              <div className="text-xs text-[#3d5a45] font-semibold uppercase tracking-widest mb-1">📍 继续学习</div>
+              <div className="font-display text-lg font-semibold text-stone-900">
+                Day {nextIncompleteDay.day} — {nextIncompleteDay.theme}
+              </div>
+              {lastCompletedDay && (
+                <div className="text-xs text-stone-500 mt-0.5">上次完成: Day {lastCompletedDay.day}</div>
+              )}
+            </div>
+            <ChevronRight className="w-5 h-5 text-[#3d5a45] shrink-0 mt-1" />
+          </div>
+        </button>
+      ) : (
+        <div className="w-full bg-[#3d5a45]/5 border border-[#3d5a45]/20 rounded-2xl p-4 mb-5 text-center">
+          <div className="font-display text-lg font-semibold text-[#3d5a45]">🎉 全部完成！太厉害了！</div>
+          <div className="text-sm text-stone-600 mt-1">60 天全部打卡，你已经做到了。</div>
+        </div>
+      )}
+
       <div className="bg-[#fffcf5] border border-stone-900/10 rounded-2xl p-5 sm:p-6 ink-shadow mb-6">
         <div className="flex items-start gap-3">
           <div className="w-10 h-10 rounded-full bg-[#3d5a45] text-stone-50 flex items-center justify-center shrink-0">
@@ -364,15 +399,16 @@ function PlanView({ completedDays, toggleDay, onJump }) {
             </div>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
               {days.map((d) => (
-                <DayCard
-                  key={d.day}
-                  day={d}
-                  done={completedDays.has(d.day)}
-                  toggle={() => toggleDay(d.day)}
-                  open={openDay === d.day}
-                  onOpen={() => setOpenDay(openDay === d.day ? null : d.day)}
-                  onJump={onJump}
-                />
+                <div id={`day-${d.day}`} key={d.day}>
+                  <DayCard
+                    day={d}
+                    done={completedDays.has(d.day)}
+                    toggle={() => toggleDay(d.day)}
+                    open={openDay === d.day}
+                    onOpen={() => setOpenDay(openDay === d.day ? null : d.day)}
+                    onJump={onJump}
+                  />
+                </div>
               ))}
             </div>
           </section>
