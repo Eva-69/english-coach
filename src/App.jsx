@@ -5,7 +5,7 @@ import {
   Coffee, Users, Loader2, X, Settings, Key, AlertTriangle, Mail,
   Phone, Users2,
 } from "lucide-react";
-import { SENTENCES, PLAN, normalize, allSentences } from "./data.js";
+import { SENTENCES, EMAIL_TEMPLATES, PLAN, normalize, allSentences, allEmailPhrases } from "./data.js";
 
 // =============================================================================
 // HELPERS
@@ -1056,5 +1056,127 @@ function ScenarioCard({ icon: Icon, title, zhTitle, desc, zhDesc, color, onClick
         开始 Start <ChevronRight className="w-3.5 h-3.5" />
       </div>
     </button>
+  );
+}
+
+// =============================================================================
+// EMAIL VIEW
+// =============================================================================
+
+function EmailView() {
+  const categories = [
+    { key: "professional", label: "职场核心", labelEn: "Professional" },
+    { key: "social",       label: "社交/日常", labelEn: "Social" },
+    { key: "internal",     label: "内部职场",  labelEn: "Internal" },
+  ];
+  const [activeCat, setActiveCat] = useState("professional");
+  const templates = EMAIL_TEMPLATES[activeCat];
+
+  return (
+    <div className="anim-slide-up">
+      <div className="bg-[#fffcf5] border border-stone-900/10 rounded-2xl p-5 sm:p-6 ink-shadow mb-6">
+        <h2 className="font-display text-xl font-semibold mb-1">邮件模板</h2>
+        <p className="text-sm text-stone-600 leading-relaxed">
+          真实可用的邮件模板。每个模板包含使用时机、完整正文，以及
+          <span className="font-semibold"> 关键短句</span>让你学以致用。
+        </p>
+      </div>
+
+      <div className="flex gap-2 mb-5">
+        {categories.map((c) => (
+          <button
+            key={c.key}
+            onClick={() => setActiveCat(c.key)}
+            className={`flex-1 sm:flex-none px-3.5 py-2 rounded-full text-sm font-medium transition-all border ${
+              activeCat === c.key
+                ? "bg-stone-900 text-stone-50 border-stone-900"
+                : "bg-[#fffcf5] text-stone-700 border-stone-900/15 hover:border-stone-900/40"
+            }`}
+          >
+            <span className="hidden sm:inline">{c.label} · </span>{c.labelEn}
+          </button>
+        ))}
+      </div>
+
+      <div className="space-y-4">
+        {templates.map((t, i) => <EmailCard key={i} template={t} />)}
+      </div>
+    </div>
+  );
+}
+
+function CopyButton({ text }) {
+  const [copied, setCopied] = useState(false);
+  const copy = () => {
+    navigator.clipboard.writeText(text).then(() => {
+      setCopied(true);
+      setTimeout(() => setCopied(false), 1500);
+    });
+  };
+  return (
+    <button
+      onClick={copy}
+      className="text-xs text-stone-500 hover:text-stone-900 px-2 py-0.5 rounded border border-stone-900/10 hover:border-stone-900/30 transition-colors shrink-0"
+    >
+      {copied ? "✓ 已复制" : "复制"}
+    </button>
+  );
+}
+
+function EmailCard({ template }) {
+  const [phrasesOpen, setPhrasesOpen] = useState(false);
+
+  return (
+    <div className="bg-[#fffcf5] border border-stone-900/10 rounded-xl ink-shadow overflow-hidden">
+      <div className="p-4 sm:p-5">
+        <div className="mb-3">
+          <div className="font-display text-lg font-semibold text-stone-900">{template.title}</div>
+          <div className="text-sm text-stone-500">{template.zhTitle}</div>
+        </div>
+
+        <div className="text-xs text-stone-600 bg-stone-900/[0.03] border border-stone-900/5 rounded-lg px-3 py-2 mb-4 leading-relaxed">
+          <span className="font-semibold text-stone-700">使用时机：</span>{template.whenToUse}
+        </div>
+
+        <div className="mb-3">
+          <div className="flex items-center justify-between mb-1">
+            <div className="text-[10px] uppercase tracking-widest text-stone-500 font-semibold">Subject Line</div>
+            <CopyButton text={template.subject} />
+          </div>
+          <div className="font-mono text-sm text-stone-800 bg-white border border-stone-900/10 rounded-lg px-3 py-2">
+            {template.subject}
+          </div>
+        </div>
+
+        <div className="mb-4">
+          <div className="flex items-center justify-between mb-1">
+            <div className="text-[10px] uppercase tracking-widest text-stone-500 font-semibold">Email Body</div>
+            <CopyButton text={template.body} />
+          </div>
+          <pre className="font-mono text-sm text-stone-800 bg-white border border-stone-900/10 rounded-lg px-3 py-3 whitespace-pre-wrap leading-relaxed overflow-x-auto">
+            {template.body}
+          </pre>
+        </div>
+
+        <button
+          onClick={() => setPhrasesOpen((o) => !o)}
+          className="w-full flex items-center justify-between text-sm font-semibold text-[#3d5a45] hover:text-[#2f4736] transition-colors"
+        >
+          <span>💡 关键短句 Key Phrases ({template.keyPhrases.length})</span>
+          <ChevronRight className={`w-4 h-4 transition-transform ${phrasesOpen ? "rotate-90" : ""}`} />
+        </button>
+
+        {phrasesOpen && (
+          <div className="mt-3 space-y-2 anim-slide-up">
+            {template.keyPhrases.map((p, i) => (
+              <div key={i} className="bg-[#3d5a45]/5 border border-[#3d5a45]/15 rounded-lg px-3 py-2.5">
+                <div className="font-display text-sm font-medium text-stone-900 mb-0.5">"{p.en}"</div>
+                <div className="text-xs text-stone-600">{p.zh}</div>
+              </div>
+            ))}
+          </div>
+        )}
+      </div>
+    </div>
   );
 }
