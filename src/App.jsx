@@ -115,7 +115,13 @@ export default function App() {
 
       <div className="font-body min-h-screen paper-grain text-stone-900">
         <div className="max-w-5xl mx-auto px-4 sm:px-6 py-6 sm:py-10">
-          <Header progress={completedDays.size} onSettings={() => setShowSettings(true)} />
+          <Header
+            progress={completedDays.size}
+            onSettings={() => setShowSettings(true)}
+            quizSessions={getQuizSessions().length}
+            sentencesCategoriesDone={Object.keys(SENTENCES).filter(isCategoryComplete).length}
+            totalSentenceCategories={Object.keys(SENTENCES).length}
+          />
           <Nav view={view} setView={setView} />
 
           <main className="mt-6">
@@ -141,7 +147,7 @@ export default function App() {
 // HEADER
 // =============================================================================
 
-function Header({ progress, onSettings }) {
+function Header({ progress, onSettings, quizSessions, sentencesCategoriesDone, totalSentenceCategories }) {
   const pct = Math.round((progress / 60) * 100);
   return (
     <header className="mb-6">
@@ -177,6 +183,14 @@ function Header({ progress, onSettings }) {
             <div className="text-xs uppercase tracking-widest text-stone-500 mt-1">Days done</div>
             <div className="mt-2 w-32 h-1 bg-stone-200 rounded-full overflow-hidden ml-auto">
               <div className="h-full bg-[#3d5a45] transition-all duration-500" style={{ width: `${pct}%` }} />
+            </div>
+            <div className="mt-2 flex gap-2 justify-end">
+              <div className="text-xs bg-stone-900/[0.04] border border-stone-900/8 rounded-lg px-2 py-1 text-stone-600 tabular-nums">
+                测验 {quizSessions} 次
+              </div>
+              <div className="text-xs bg-stone-900/[0.04] border border-stone-900/8 rounded-lg px-2 py-1 text-stone-600 tabular-nums">
+                句子 {sentencesCategoriesDone}/{totalSentenceCategories}
+              </div>
             </div>
           </div>
         </div>
